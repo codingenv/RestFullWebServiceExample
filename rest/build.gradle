@@ -1,0 +1,60 @@
+plugins {
+	id 'java'
+	id 'war'
+	id 'org.springframework.boot' version '3.0.3'
+	id 'org.openapi.generator' version '6.3.0'
+	id 'io.spring.dependency-management' version '1.1.0'
+}
+
+group = 'com.basic.rest.project'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.boot:spring-boot-starter-artemis'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+}
+
+
+
+task deleteOpenAPITools(type: Delete){
+	def openapitoolsDir = "$buildDir/generated/src/main/java/org/" as File
+	delete openapitoolsDir
+}
+
+
+//https://github.com/OpenAPITools/openapi-generator/tree/master/modules/openapi-generator-gradle-plugin
+
+tasks.compileJava.dependsOn tasks.openApiGenerate
+
+openApiGenerate {
+	generatorName = "spring"
+	inputSpec = "$projectDir/src/main/resources/yaml/rest.yaml".toString()
+	outputDir = "$buildDir/generated".toString()
+	apiPackage = "com.basic.rest.project.rest.controllers"
+	invokerPackage = "com.basic.rest.project.rest.invoker"
+	modelPackage = "com.basic.rest.project.rest.models"
+	validateSpec = true
+
+
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

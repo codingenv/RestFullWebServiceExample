@@ -1,0 +1,51 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Sample API
+  description: A sample API to illustrate OpenAPI concepts
+  contact:
+    name: XXXXX
+
+
+servers:
+  - url: "https://localhost/rest/v1"
+
+paths:
+  /program:
+    get:
+      summary: Get all the programs supported by this project.
+      tags:
+        - Programs
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProgramResponse'
+        '400':
+          description: Bad Request
+      operationId: program
+      description: Get all the programs
+
+tags:
+  - name: DSAPrograms
+    description: Data structure programs
+
+components:
+  responses:
+    Code204:
+      description: No Content
+  schemas:
+    ProgramResponse:
+      title: ProgramResponse
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        groupId:
+          type: integer
+        groupName:
+          type: string
