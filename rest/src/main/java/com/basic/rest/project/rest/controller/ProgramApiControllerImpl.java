@@ -24,6 +24,4 @@ public class ProgramApiControllerImpl implements ProgramApi{
         obj.setGroupName("Arrays");
         return new ResponseEntity<>(obj,HttpStatus.OK);
     }
-
-
 }
