@@ -8,7 +8,7 @@ info:
 
 
 servers:
-  - url: "https://localhost/rest/v1"
+  - url: "http://localhost/rest/v1"
 
 paths:
   /program:

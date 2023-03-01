@@ -16,7 +16,13 @@ public class ProgramApiControllerImpl implements ProgramApi{
 
     public ResponseEntity<ProgramResponse> program() {
         log.info("This is a very basic program on rest API.");
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+        ProgramResponse obj = new ProgramResponse();
+        obj.setGroupId(1);
+        obj.setId(1);
+        obj.setName("All Program List");
+        obj.setGroupName("Arrays");
+        return new ResponseEntity<>(obj,HttpStatus.OK);
     }
 
 
