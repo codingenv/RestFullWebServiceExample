@@ -15,7 +15,7 @@ Notes:
 
     To call it from postman:
         url:
-            http://localhost:8080/program
+1.            http://localhost:8080/program
 
         output:
             {
@@ -24,6 +24,9 @@ Notes:
                 "groupId": 1,
                 "groupName": "Arrays"
             }
+
+2. http://localhost:8080/actuator
+
 
 ===============================
 Tries:
