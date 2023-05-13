@@ -12,18 +12,16 @@ import org.springframework.jms.annotation.EnableJms;
 @SpringBootApplication
 @ComponentScan
 @Slf4j
-//@EntityScan("com.basic.rest.project.rest")
 
-
-
+@EntityScan("com.basic.rest.project.rest")
 public class RestApplication {
 
 	public static void main(String[] args) {
-		log.info("========Starting Rest Application=========");
+		log.info("======== Starting Rest Application =========");
 		ConfigurableApplicationContext context =  SpringApplication.run(RestApplication.class, args);
 		Object dataSource = context.getBean("dataSource");
 		System.out.println(dataSource);
-		log.info("========Stopping Rest Application=========");
+		log.info("======== Rest Application started successfully =========");
 	}
 
 }

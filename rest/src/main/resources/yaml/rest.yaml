@@ -11,22 +11,24 @@ servers:
   - url: "http://localhost/rest/v1"
 
 paths:
-  /program:
+  /collage/student:
     get:
       summary: Get all the programs supported by this project.
       tags:
-        - Programs
+        - student
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ProgramResponse'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Student'
         '400':
           description: Bad Request
-      operationId: program
-      description: Get all the programs
+      operationId: student
+      description: Get all the students
 
 tags:
   - name: DSAPrograms
@@ -37,15 +39,19 @@ components:
     Code204:
       description: No Content
   schemas:
-    ProgramResponse:
-      title: ProgramResponse
+    Student:
+      title: Student
       type: object
       properties:
         id:
           type: integer
         name:
           type: string
-        groupId:
+        city:
+          type: string
+        age:
           type: integer
-        groupName:
+        std:
+          type: integer
+        stream:
           type: string
