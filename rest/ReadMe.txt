@@ -18,15 +18,6 @@ Notes:
 1.            http://localhost:8080/collage/student
 
         output:
-            {
-                "id": 1,
-                "name": "All Program List",
-                "groupId": 1,
-                "groupName": "Arrays"
-            }
-
-2. http://localhost:8080/actuator
-
 [
     {
         "id": 1,
@@ -45,6 +36,28 @@ Notes:
         "stream": "Arts"
     }
 ]
+
+2. http://localhost:8080/actuator
+
+Output:
+
+{
+    "_links": {
+        "self": {
+            "href": "http://localhost:8080/actuator",
+            "templated": false
+        },
+        "health": {
+            "href": "http://localhost:8080/actuator/health",
+            "templated": false
+        },
+        "health-path": {
+            "href": "http://localhost:8080/actuator/health/{*path}",
+            "templated": true
+        }
+    }
+}
+
 
 ===============================
 Tries:
