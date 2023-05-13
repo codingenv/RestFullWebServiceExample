@@ -7,8 +7,8 @@ import javax.persistence.*;
 @Table(name = "student")
 public class Student {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @Id
+    private int id;
 
     @Column(nullable = false, length = 255)
     private String name;
@@ -30,7 +30,7 @@ public class Student {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

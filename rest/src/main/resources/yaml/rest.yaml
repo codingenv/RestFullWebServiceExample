@@ -14,8 +14,19 @@ paths:
   /collage/student:
     get:
       summary: Get all the programs supported by this project.
+      operationId: student
+      description: Get all the students
       tags:
         - student
+      parameters:
+        - name: city
+          in: query
+          description: retreive student based on city
+          required: fasle
+          style: form
+          explode: true
+          schema:
+            type: string
       responses:
         '200':
           description: OK
@@ -27,8 +38,41 @@ paths:
                   $ref: '#/components/schemas/Student'
         '400':
           description: Bad Request
-      operationId: student
-      description: Get all the students
+    post:
+      summary: Create one student entity in DB.
+      operationId: addStudent
+      description: Create one student entity in DB
+      tags:
+        - student
+      requestBody:
+        description: student request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Student'
+        required: true
+      responses:
+        '200':
+          description: OK
+  '/collage/student/{id}':
+    parameters:
+      - schema:
+          type: int
+        name: id
+        in: path
+        required: true
+    get:
+      summary: Get one student details
+      description: Get one student details
+      operationId: getStudentDetails
+      responses:
+        '200':
+          description: The request student
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+
 
 tags:
   - name: DSAPrograms

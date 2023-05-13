@@ -21,7 +21,7 @@ public class CollageApiImpl implements CollageApi{
     public StudentRepository studentRepo;
 
     public ResponseEntity<List<com.basic.rest.project.rest.models.Student>> student() {
-        log.info("This is a very basic program on rest API.");
+        log.info("Get all student from collage");
 
         List<com.basic.rest.project.rest.models.Student> studentList = new ArrayList<>();
         List<Student> allStudents = studentRepo.findAll();
@@ -42,4 +42,62 @@ public class CollageApiImpl implements CollageApi{
         }
         return new ResponseEntity<>(studentList,HttpStatus.OK);
     }
+
+    public ResponseEntity<com.basic.rest.project.rest.models.Student> getStudentDetails(Integer id){
+        log.info("Get the student details for the id: "+ id);
+
+        Student st = studentRepo.getReferenceById(id);
+        if(st != null){
+            com.basic.rest.project.rest.models.Student student = new com.basic.rest.project.rest.models.Student();
+            student.setId((int)st.getId());
+            student.setName(st.getName());
+            student.setStream(st.getStream());
+            student.setAge(st.getAge());
+            student.setCity(st.getCity());
+            return new ResponseEntity<>(student,HttpStatus.OK);
+        }else{
+            log.info("No student details found for the id: " +id);
+            return new ResponseEntity<>(null,HttpStatus.NO_CONTENT);
+        }
+
+    }
+
+    public ResponseEntity<List<com.basic.rest.project.rest.models.Student>> student(String city){
+        log.info("Get the student details having city: "+ city);
+        List<com.basic.rest.project.rest.models.Student> studentList = new ArrayList<>();
+        List<Student> studentFromDb = studentRepo.getStudentByCity(city);
+        if(studentFromDb !=null && studentFromDb.size() != 0){
+            for(Student st: studentFromDb){
+                com.basic.rest.project.rest.models.Student stu = new com.basic.rest.project.rest.models.Student();
+                stu.setId((int)st.getId());
+                stu.setName(st.getName());
+                stu.setCity(st.getCity());
+                stu.setStd(st.getStd());
+                stu.setStream(st.getStream());
+                stu.setAge(st.getAge());
+
+                studentList.add(stu);
+
+                System.out.println("Student: " +st.toString());
+            }
+        }
+        return new ResponseEntity<>(studentList,HttpStatus.OK);
+    }
+
+    public ResponseEntity<Void> addStudent(com.basic.rest.project.rest.models.Student st) {
+        log.info("Id:: "+ st.getId());
+        Student stu = new Student();
+        stu.setId((int)st.getId());
+        stu.setName(st.getName());
+        stu.setCity(st.getCity());
+        stu.setStd(st.getStd());
+        stu.setStream(st.getStream());
+        stu.setAge(st.getAge());
+
+        studentRepo.save(stu);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
 }
