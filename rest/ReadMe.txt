@@ -1,4 +1,4 @@
-Springboot Version: 3.0.3
+Springboot Version: 2.7.1
 Java Version: 17
 gradle version: 7.6
 
@@ -15,7 +15,7 @@ Notes:
 
     To call it from postman:
         url:
-1.            http://localhost:8080/program
+1.            http://localhost:8080/collage/student
 
         output:
             {
@@ -27,6 +27,24 @@ Notes:
 
 2. http://localhost:8080/actuator
 
+[
+    {
+        "id": 1,
+        "name": "Prakash",
+        "city": "Bangalore",
+        "age": 14,
+        "std": 12,
+        "stream": "Science"
+    },
+    {
+        "id": 2,
+        "name": "Prateek",
+        "city": "Surat",
+        "age": 13,
+        "std": 11,
+        "stream": "Arts"
+    }
+]
 
 ===============================
 Tries:
