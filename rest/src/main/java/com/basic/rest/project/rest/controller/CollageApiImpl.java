@@ -20,29 +20,6 @@ public class CollageApiImpl implements CollageApi{
     @Autowired
     public StudentRepository studentRepo;
 
-    public ResponseEntity<List<com.basic.rest.project.rest.models.Student>> student() {
-        log.info("Get all student from collage");
-
-        List<com.basic.rest.project.rest.models.Student> studentList = new ArrayList<>();
-        List<Student> allStudents = studentRepo.findAll();
-        if(allStudents !=null && allStudents.size() != 0){
-            for(Student st: allStudents){
-                com.basic.rest.project.rest.models.Student stu = new com.basic.rest.project.rest.models.Student();
-                stu.setId((int)st.getId());
-                stu.setName(st.getName());
-                stu.setCity(st.getCity());
-                stu.setStd(st.getStd());
-                stu.setStream(st.getStream());
-                stu.setAge(st.getAge());
-
-                studentList.add(stu);
-
-                System.out.println("Student: " +st.toString());
-            }
-        }
-        return new ResponseEntity<>(studentList,HttpStatus.OK);
-    }
-
     public ResponseEntity<com.basic.rest.project.rest.models.Student> getStudentDetails(Integer id){
         log.info("Get the student details for the id: "+ id);
 
@@ -62,10 +39,15 @@ public class CollageApiImpl implements CollageApi{
 
     }
 
-    public ResponseEntity<List<com.basic.rest.project.rest.models.Student>> student(String city){
+    public ResponseEntity<List<com.basic.rest.project.rest.models.Student>> getAllStudent(String city){
         log.info("Get the student details having city: "+ city);
+        List<Student> studentFromDb;
         List<com.basic.rest.project.rest.models.Student> studentList = new ArrayList<>();
-        List<Student> studentFromDb = studentRepo.getStudentByCity(city);
+        if(city == null){
+            studentFromDb = studentRepo.findAll();
+        }else {
+            studentFromDb = studentRepo.getStudentByCity(city);
+        }
         if(studentFromDb !=null && studentFromDb.size() != 0){
             for(Student st: studentFromDb){
                 com.basic.rest.project.rest.models.Student stu = new com.basic.rest.project.rest.models.Student();

@@ -14,7 +14,7 @@ paths:
   /collage/student:
     get:
       summary: Get all the programs supported by this project.
-      operationId: student
+      operationId: getAllStudent
       description: Get all the students
       tags:
         - student
