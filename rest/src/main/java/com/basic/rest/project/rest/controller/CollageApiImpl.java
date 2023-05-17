@@ -39,6 +39,19 @@ public class CollageApiImpl implements CollageApi{
 
     }
 
+    public ResponseEntity<Void> deleteStudent(Integer id) {
+        log.info("Deleting Student with Id:: "+ id);
+        Integer deleteId = id;
+        Student student = studentRepo.getReferenceById(id);
+        if(student != null){
+            studentRepo.delete(student);
+        }else{
+            log.error("No Student with ID: " + id + " is found in record");
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     public ResponseEntity<List<com.basic.rest.project.rest.models.Student>> getAllStudent(String city){
         log.info("Get the student details having city: "+ city);
         List<Student> studentFromDb;
@@ -79,6 +92,22 @@ public class CollageApiImpl implements CollageApi{
         studentRepo.save(stu);
 
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    public ResponseEntity<Void> updateStudent(Integer id, com.basic.rest.project.rest.models.Student student) {
+
+        Student studentDb = studentRepo.getReferenceById(id);
+        if(studentDb != null){
+            studentDb.setAge(student.getAge());
+            studentDb.setStd(student.getStd());
+            studentDb.setStream(student.getStream());
+            studentDb.setName(student.getName());
+            studentDb.setCity(student.getCity());
+            studentRepo.save(studentDb);
+        }
+
+        return new ResponseEntity<>(HttpStatus.OK);
+
     }
 
 

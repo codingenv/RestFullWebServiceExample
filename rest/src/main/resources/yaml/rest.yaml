@@ -72,6 +72,28 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Student'
+    delete:
+      summary: Delete the student record.
+      description: Delete the student record.
+      operationId: deleteStudent
+      responses:
+        '200':
+          description: OK
+    put:
+      summary: Update the student record.
+      description: Update the student record.
+      operationId: updateStudent
+      requestBody:
+        description: student request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Student'
+        required: true
+      responses:
+        '200':
+          description: OK
+
 
 
 tags:

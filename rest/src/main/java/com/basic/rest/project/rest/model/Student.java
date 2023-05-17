@@ -8,7 +8,7 @@ import javax.persistence.*;
 public class Student {
 
     @Id
-    private int id;
+    private Integer id;
 
     @Column(nullable = false, length = 255)
     private String name;
