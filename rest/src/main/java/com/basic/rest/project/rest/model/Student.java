@@ -7,6 +7,7 @@ import javax.persistence.*;
 @Table(name = "student")
 public class Student {
 
+    @GeneratedValue
     @Id
     private Integer id;
 
@@ -26,11 +27,11 @@ public class Student {
     private String stream;
 
 
-    public long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

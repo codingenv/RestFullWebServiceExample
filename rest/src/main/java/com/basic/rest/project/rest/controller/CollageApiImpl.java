@@ -2,6 +2,7 @@ package com.basic.rest.project.rest.controller;
 
 
 import com.basic.rest.project.rest.model.Student;
+import com.basic.rest.project.rest.models.AddStudentResponseBody;
 import com.basic.rest.project.rest.repository.StudentRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,10 +80,10 @@ public class CollageApiImpl implements CollageApi{
         return new ResponseEntity<>(studentList,HttpStatus.OK);
     }
 
-    public ResponseEntity<Void> addStudent(com.basic.rest.project.rest.models.Student st) {
-        log.info("Id:: "+ st.getId());
+    public ResponseEntity<AddStudentResponseBody> addStudent(com.basic.rest.project.rest.models.Student st) {
+
         Student stu = new Student();
-        stu.setId((int)st.getId());
+
         stu.setName(st.getName());
         stu.setCity(st.getCity());
         stu.setStd(st.getStd());
@@ -90,24 +91,36 @@ public class CollageApiImpl implements CollageApi{
         stu.setAge(st.getAge());
 
         studentRepo.save(stu);
-
-        return new ResponseEntity<>(HttpStatus.OK);
+        AddStudentResponseBody response =  new AddStudentResponseBody();
+        response.setId(stu.getId());
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     public ResponseEntity<Void> updateStudent(Integer id, com.basic.rest.project.rest.models.Student student) {
 
-        Student studentDb = studentRepo.getReferenceById(id);
-        if(studentDb != null){
-            studentDb.setAge(student.getAge());
-            studentDb.setStd(student.getStd());
-            studentDb.setStream(student.getStream());
-            studentDb.setName(student.getName());
-            studentDb.setCity(student.getCity());
-            studentRepo.save(studentDb);
+        boolean createdFlag = false;
+        Student studentDb = null;
+        try {
+            studentDb = studentRepo.getReferenceById(id);
+        }catch(javax.persistence.EntityNotFoundException e){
+            studentDb = new Student();
+            createdFlag = true;
         }
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        studentDb.setAge(student.getAge());
+        studentDb.setStd(student.getStd());
+        studentDb.setStream(student.getStream());
+        studentDb.setName(student.getName());
+        studentDb.setCity(student.getCity());
+        studentRepo.save(studentDb);
 
+        if(createdFlag) {
+            AddStudentResponseBody response =  new AddStudentResponseBody();
+            response.setId(studentDb.getId());
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }else{
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
     }
 
 
